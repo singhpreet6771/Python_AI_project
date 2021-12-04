@@ -4,6 +4,8 @@ import pywhatkit
 import datetime
 import wikipedia
 import pyjokes
+import recommend as rec
+# import objc
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
@@ -41,6 +43,8 @@ def run_alexa():
     print(command)
     if 'play' in command:
         song = command.replace('play', '')
+        print(song)
+        rec.add_keyword(song)
         talk('playing ' + song)
         pywhatkit.playonyt(song)
     elif 'time' in command:
@@ -53,10 +57,20 @@ def run_alexa():
         talk(info)
     elif 'date' in command:
         talk('sorry, I have a headache')
+
+    elif 'send' in command:
+        pywhatkit.sendwhatmsg("+919914779379",
+                              "Hello from Gurpreet",
+                              20, 30)
+        print("Successfully Sent!")
+
     elif 'are you single' in command:
         talk('I am in a relationship with wifi')
     elif 'joke' in command:
         talk(pyjokes.get_joke())
+    elif 'recommend' in command:
+        speak = rec.recommend()
+        pywhatkit.playonyt(speak)
     else:
         talk('Please say the command again.')
 
